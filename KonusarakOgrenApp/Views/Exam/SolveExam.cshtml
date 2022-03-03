@@ -1,0 +1,72 @@
+﻿@model IEnumerable<KonusarakOgrenApp.Models.Question>
+
+
+@{
+    ViewData["Title"] = "SolveExam";
+    int counter = 0;
+}
+
+<h3>Testi Çöz</h3>
+
+<div class="container">
+    <div class="row">
+            <div class="form-group col-md-12" style="padding-left:0px;">
+                <h6 class="control-label">Get titles of last 5 news on Wired.com</h6>
+                <textarea id="title" name="title" class="form-control" style="width:100%; height:100px;" value="@ViewBag.QuizTitle">@ViewBag.QuizTitle" </textarea>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="col-6">
+                    <div class="d-flex flex-column">
+                        <div class="form-group col-md-12" style="padding-left:0px;">
+                            Soru  @(++counter)) @Html.DisplayFor(modelItem => item.QuestionText)
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="radio" id="option1" name="@Html.DisplayFor(modelItem => item.Id)" style="height:20px; width:20px;" value="@Html.DisplayFor(modelItem => item.Option)" class="rb" /><div class="changeColor">@Html.DisplayFor(modelItem => item.Option)</div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="radio" id="option2" name="@Html.DisplayFor(modelItem => item.Id)" style="height:20px; width:20px;" value="@Html.DisplayFor(modelItem => item.Option2)" class="rb" /><div class="changeColor">@Html.DisplayFor(modelItem => item.Option2)</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="radio" id="option3" name="@Html.DisplayFor(modelItem => item.Id)" style="height:20px; width:20px;" value="@Html.DisplayFor(modelItem => item.Option3)" class="rb" /><div class="changeColor">@Html.DisplayFor(modelItem => item.Option3)</div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="radio" id="option4" name="@Html.DisplayFor(modelItem => item.Id)" style="height:20px; width:20px;" value="@Html.DisplayFor(modelItem => item.Option4)" class="rb" /><div class="changeColor">@Html.DisplayFor(modelItem => item.Option4)</div>
+                            </div>
+                        </div>
+                        <label id="correctanswer" name="@Html.DisplayFor(modelItem => item.Id)" class="rb" style="display:none;">@Html.DisplayFor(modelItem => item.CorrectOption)</label>
+                        </div>
+                </div>
+            }
+              <div class="form-group">
+                <button type="button" id="correctAnswer" class="btn btn-success">Sınavı tamamla</button>
+            </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $('#correctAnswer').click(function () {
+        var checkedInputs = $(this).parents().find(":checked")
+        checkedInputs.each(function () {
+            var answer = $(this).parent().parent().parent().find('#correctanswer').text()
+            if ($(this).val() === answer) {
+                $(this).parent().css('background-color', 'green')
+            } else {
+                $(this).parent().css('background-color', 'red')
+            }
+        })
+    });
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+ }
+    }
+
+

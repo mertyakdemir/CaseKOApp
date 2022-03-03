@@ -1,0 +1,72 @@
+﻿@model KonusarakOgrenApp.Models.QuestionViewModel
+
+
+@{
+    ViewData["Title"] = "CreateExam";
+    int counter = 0;
+}
+
+<h3>Get titles of last 5 news on Wired.com</h3>
+
+<div class="container-fluid">
+    <form asp-action="CreateExam">
+        <div class="form-group col-md-12">
+            <label class="control-label"></label>
+            <input id="title" name="title" class="form-control" value="@ViewBag.Result" />
+        </div>
+        @for (var i = 0; i < 4; i++)
+        {
+    <div class="col-md-12">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group col-md-12">
+            <label class="control-label">Soru  @(++counter) </label>
+            <input asp-for="Questions[i].QuestionText" class="form-control" />
+            <span asp-validation-for="Questions[i].QuestionText" class="text-danger"></span>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="control-label">A</label>
+                <input asp-for="Questions[i].Option" class="form-control" />
+                <span asp-validation-for="Questions[i].Option" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">B</label>
+                <input asp-for="Questions[i].Option2" class="form-control" />
+                <span asp-validation-for="Questions[i].Option2" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="control-label">C</label>
+                <input asp-for="Questions[i].Option3" class="form-control" />
+                <span asp-validation-for="Questions[i].Option3" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label">D</label>
+                <input asp-for="Questions[i].Option4" class="form-control" />
+                <span asp-validation-for="Questions[i].Option4" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <select id="drpEmpList" class="form-control" asp-for="Questions[i].CorrectId" asp-items="@(new SelectList(Model.ListItems, "Value", "Text"))">
+                <option value="">Doğru şıkkı seçiniz</option>
+            </select>
+            <input type="hidden" asp-for="Questions[i].CorrectId" />
+        </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    }
+        <div class="form-group">
+            <input type="submit" value="Sınavı oluştur" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

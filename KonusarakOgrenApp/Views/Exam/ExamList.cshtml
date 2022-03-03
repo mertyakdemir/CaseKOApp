@@ -1,0 +1,36 @@
+﻿@model IEnumerable<KonusarakOgrenApp.Models.QuestionViewModel>
+
+@{
+    ViewData["Title"] = "ExamList";
+}
+
+<h1>ExamList</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.ActionLink("Sil", "DeleteExam", new { id=item.QuestionId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
